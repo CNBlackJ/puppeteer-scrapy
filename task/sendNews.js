@@ -7,7 +7,7 @@ const wx = new WX()
 const rootDir = process.cwd()
 
 async function sendNews () {
-  const url = ''
+  const url = 'https://wemp.app/posts/985191ae-a778-422c-83e7-1e027c215bff'
   // 爬取数据
   let isAllRight = true
   const news = await scrapy(url)
