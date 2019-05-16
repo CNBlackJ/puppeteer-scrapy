@@ -1,38 +1,24 @@
 const fs = require('fs')
 const moment = require('moment')
-const scrapy = require('../libs/scrapy')
+const techweb = require('../dataSrouce/techweb')
 const WX = require('../libs/WX')
 const wx = new WX()
 
 const rootDir = process.cwd()
 
 async function sendNews () {
-  const url = 'https://wemp.app/posts/985191ae-a778-422c-83e7-1e027c215bff'
+  const url = ''
   // 爬取数据
-  let isAllRight = true
-  const news = await scrapy(url)
-  // 检查数据的正确性
-  if (!news || !news.length) {
-    console.log('cannot get news')
-    isAllRight = false
-  }
-  const newsList = news.map(item => {
-    if (item.category && item.newsList.length) {
-      return item
-    }
-  })
-  console.log(newsList)
-  if (isAllRight) {
-    // 保存本地文件
-    const filename = `${rootDir}/newsData/${moment().format('YYYYMMDD')}.json`
-    fs.writeFile(filename, JSON.stringify(news), 'utf8', (err) => {
-      if (err) return console.log(err)
-      wx.sendTextMsg({
-        reciverList: ['ZhangYeSheng'],
-        content: JSON.stringify(news)
-      })
+  techweb(url, (newsTitleList) => {
+    let content = ``
+    newsTitleList.map((ele, i) => {
+      content += `${i + 1}、${ele} </br>`
     })
-  }
+    wx.sendTextMsg({
+      reciverList: ['ZhangYeSheng', 'HuangYing'],
+      content
+    })
+  })
 }
 
 sendNews().then().catch()

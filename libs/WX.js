@@ -4,7 +4,7 @@ const baseConfig = {
   corpid,
   corpsecret
 }
-const agentid = 1000003
+const agentid = 1000006
 
 const request = require('axios')
 
