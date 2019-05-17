@@ -21,4 +21,4 @@ async function sendNews () {
   })
 }
 
-sendNews().then().catch()
+module.exports = sendNews
